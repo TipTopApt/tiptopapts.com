@@ -1,0 +1,148 @@
+@import "../config/variables.scss";
+
+.features {
+  margin-top: 5rem;
+
+  .features-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    .features-heading {
+      margin-bottom: 3rem;
+
+      @media screen and (max-width: 768px) {
+        margin-bottom: 2rem;
+      }
+
+      @media screen and (max-width: 480px) {
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: 5rem;
+        font-weight: 400;
+        color: $gray;
+
+        @media screen and (max-width: 768px) {
+          font-size: 3.5rem;
+          text-align: center;
+        }
+
+        @media screen and (max-width: 480px) {
+          font-size: 2.5rem;
+        }
+      }
+    }
+
+    .features-content {
+      display: flex;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .features-image {
+        width: 40%;
+        margin-right: 2rem;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          height: 50vh;
+          margin-bottom: 2rem;
+          margin-right: 0;
+        }
+
+        @media screen and (max-width: 480px) {
+          width: 100%;
+          height: 30vh;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50px 0;
+          box-shadow: 5px 24px 53px 0px rgba(0, 0, 0, 0.25);
+
+          @media screen and (max-width: 768px) {
+            border-radius: 0;
+            box-shadow: none;
+          }
+        }
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 2.5rem;
+        margin-left: 2rem;
+        width: 60%;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          margin-left: 0;
+        }
+
+        @media screen and (max-width: 380px) {
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 1rem;
+        }
+
+        .features-grid-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          @media screen and (max-width: 480px) {
+            margin-top: 1rem;
+          }
+
+          .features-grid-item-icon {
+            padding: 1rem;
+            box-shadow: 0px 12px 19px 0px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            height: 150px;
+            width: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              width: 100px;
+
+              @media screen and (max-width: 480px) {
+                width: 80px;
+              }
+
+              @media screen and (max-width: 380px) {
+                width: 60px;
+              }
+            }
+
+            @media screen and (max-width: 768px) {
+              height: 100px;
+              width: 100px;
+              box-shadow: none;
+            }
+
+            @media screen and (max-width: 480px) {
+              height: 40px;
+              width: 40px;
+              margin-bottom: 1rem;
+            }
+          }
+          p {
+            color: $dark-gray;
+            font-size: 1.1rem;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+@import "../config/variables.scss";
+
+.reviews {
+  .review-banner {
+    background-image: linear-gradient(
+        200deg,
+        rgba(0, 0, 0, 0.51) 16.41%,
+        rgba(0, 0, 0, 0.51) 77.16%
+      ),
+      url(../assets/reviewbanner.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    margin-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+      font-family: $body;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-style: italic;
+
+      @media screen and (max-width: 768px) {
+        font-size: 1.5rem;
+      }
+
+      @media screen and (max-width: 480px) {
+        font-size: 1rem;
+      }
+    }
+    .reviews-heading {
+      h1 {
+        font-size: 5rem;
+        font-weight: 400;
+
+        color: white;
+
+        @media screen and (max-width: 768px) {
+          font-size: 3.5rem;
+          text-align: center;
+        }
+
+        @media screen and (max-width: 480px) {
+          font-size: 2.5rem;
+        }
+      }
+    }
+  }
+  .reviews-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    .reviews-content {
+      margin-top: 0;
+      margin-bottom: 5rem;
+      color: $gray;
+
+      @media screen and (max-width: 768px) {
+        margin: 2rem 0;
+      }
+
+      .review {
+        .stars {
+          margin-bottom: 1rem;
+
+          svg {
+            font-size: 2rem;
+            margin: 0 0.5rem;
+          }
+        }
+
+        .text {
+          p {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: $dark-gray;
+
+            @media screen and (max-width: 768px) {
+              font-size: 1.2rem;
+            }
+
+            @media screen and (max-width: 480px) {
+              font-size: 1rem;
+            }
+          }
+        }
+
+        .name {
+          h3 {
+            font-size: 2rem;
+            font-weight: 400;
+            color: black;
+          }
+        }
+      }
+    }
+  }
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

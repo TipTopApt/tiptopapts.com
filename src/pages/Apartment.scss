@@ -1,0 +1,352 @@
+@import "../config/variables.scss";
+
+.apartment-page {
+  .navbar {
+    .navbar-container {
+      color: black;
+      border-bottom: 0.5px solid black;
+
+      .navbar-links {
+        .navbar-link {
+          color: black;
+        }
+
+        .navbar-link:hover {
+          border-bottom: 4px solid black;
+        }
+      }
+    }
+  }
+
+  .apartment-page-container {
+    margin: 3rem 0;
+    .apartment-title {
+      width: 80%;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+      text-align: center;
+
+      h1 {
+        font-size: 4rem;
+        font-weight: 300;
+
+        @media screen and (max-width: 480px) {
+          font-size: 3rem;
+        }
+      }
+    }
+
+    .apartment-gallery {
+      height: 30rem;
+
+      @media screen and (max-width: 480px) {
+        height: 20rem;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .apartment-information {
+      display: flex;
+      align-items: flex-start;
+      width: 80%;
+      margin: 5rem auto;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+      }
+
+      .apartment-details {
+        width: 60%;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+        }
+
+        .apartment-details-stats {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+
+          p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin: 0.5rem 0;
+
+            @media screen and (max-width: 480px) {
+              font-size: 1rem;
+            }
+          }
+        }
+
+        .apartment-description {
+          margin-top: 2rem;
+          font-size: 1.2rem;
+          font-weight: 300;
+          line-height: 2.5rem;
+
+          @media screen and (max-width: 480px) {
+            font-size: 1rem;
+            line-height: 2rem;
+          }
+        }
+
+        .apartment-amenities {
+          margin-top: 3rem;
+
+          h3 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin: 1rem 0;
+
+            @media screen and (max-width: 480px) {
+              font-size: 2rem;
+            }
+          }
+
+          h3:after {
+            content: "";
+            display: block;
+            width: 5rem;
+            height: 0.2rem;
+            background-color: $gray;
+          }
+
+          .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1rem;
+            margin-top: 2rem;
+
+            .amenity {
+              display: flex;
+              align-items: center;
+
+              img {
+                height: 2rem;
+                width: 2rem;
+                margin-right: 1rem;
+              }
+
+              p {
+                font-size: 1.2rem;
+                font-weight: 300;
+
+                @media screen and (max-width: 480px) {
+                  font-size: 1rem;
+                }
+              }
+            }
+          }
+        }
+
+        .apartment-rules {
+          margin-top: 3rem;
+          h3 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin: 1rem 0;
+
+            @media screen and (max-width: 480px) {
+              font-size: 2rem;
+            }
+          }
+
+          h3:after {
+            content: "";
+            display: block;
+            width: 5rem;
+            height: 0.2rem;
+            background-color: $gray;
+          }
+
+          ul {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1rem;
+            margin-top: 2rem;
+
+            @media screen and (max-width: 480px) {
+              grid-template-columns: 1fr;
+            }
+
+            li {
+              font-size: 1.2rem;
+
+              @media screen and (max-width: 480px) {
+                font-size: 1rem;
+              }
+            }
+
+            li:before {
+              content: "✓";
+              color: $gray;
+              font-weight: bold;
+              display: inline-block;
+              width: 1em;
+              margin-left: -1em;
+              margin-right: 0.5rem;
+            }
+          }
+        }
+
+        .apartment-cancellation {
+          margin-top: 3rem;
+
+          h3 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin: 1rem 0;
+
+            @media screen and (max-width: 480px) {
+              font-size: 2rem;
+            }
+          }
+
+          h3:after {
+            content: "";
+            display: block;
+            width: 5rem;
+            height: 0.2rem;
+            background-color: $gray;
+          }
+
+          p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 2rem;
+
+            @media screen and (max-width: 480px) {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+
+      .apartment-booking {
+        width: 40%;
+        margin-left: 2rem;
+        padding: 3rem;
+        border: 1px solid $gray;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          margin-left: 0;
+          margin-top: 2rem;
+        }
+
+        @media screen and (max-width: 480px) {
+          padding: 2rem;
+        }
+
+        .apartment-booking-title {
+          margin-bottom: 2rem;
+
+          h3 {
+            font-size: 3rem;
+            font-weight: 300;
+
+            @media screen and (max-width: 480px) {
+              font-size: 2rem;
+            }
+          }
+        }
+
+        .apartment-booking-form {
+          width: 100%;
+
+          @media screen and (max-width: 768px) {
+            width: 80%;
+          }
+
+          @media screen and (max-width: 480px) {
+            width: 100%;
+          }
+
+          form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+
+            .form-group {
+              display: flex;
+              flex-direction: column;
+              margin: 1rem 0;
+              width: 100%;
+
+              label {
+                font-size: 1rem;
+                font-weight: 300;
+                margin-bottom: 0.5rem;
+                color: gray;
+                text-transform: uppercase;
+
+                .required {
+                  color: red;
+                }
+              }
+
+              input {
+                height: 3rem;
+                border: 1px solid $gray;
+                border-radius: 0;
+                padding: 0 1rem;
+                font-size: 1.2rem;
+                font-weight: 300;
+
+                @media screen and (max-width: 480px) {
+                  height: 2.5rem;
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            .form-group:last-child {
+              margin-bottom: 0;
+            }
+
+            .terms {
+              margin-top: 1rem;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+
+              input {
+                margin-right: 0.5rem;
+              }
+
+              label {
+                font-size: 1rem;
+                font-weight: 300;
+                margin: 0;
+
+                @media screen and (max-width: 480px) {
+                  font-size: 0.8rem;
+                }
+
+                a {
+                  text-decoration: underline;
+                }
+              }
+            }
+
+            .price {
+              h3 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin: 1rem 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

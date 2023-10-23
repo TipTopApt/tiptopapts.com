@@ -1,0 +1,145 @@
+@import "../config/variables.scss";
+
+.about {
+  .about-banner {
+    display: flex;
+    flex-direction: column;
+
+    background-image: linear-gradient(
+        200deg,
+        rgba(0, 0, 0, 0.51) 16.41%,
+        rgba(0, 0, 0, 0.51) 77.16%
+      ),
+      url(../assets/about.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+
+    @media screen and (max-width: 768px) {
+      height: 50vh;
+    }
+
+    @media screen and (max-width: 480px) {
+      height: 40vh;
+    }
+
+    .about-banner-overlay {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      h1 {
+        color: white;
+        font-size: 12rem;
+
+        @media screen and (max-width: 768px) {
+          font-size: 8rem;
+        }
+
+        @media screen and (max-width: 480px) {
+          font-size: 4rem;
+        }
+
+        @media screen and (max-width: 380px) {
+          font-size: 3rem;
+        }
+      }
+    }
+  }
+
+  .about-container {
+    width: 70%;
+    margin: 5rem auto;
+
+    @media screen and (max-width: 768px) {
+      width: 80%;
+      margin: 2rem auto;
+    }
+
+    .about-content {
+      display: flex;
+      flex-direction: column;
+
+      .about-content-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: column-reverse;
+          align-items: flex-start;
+        }
+
+        .about-content-image {
+          width: 40%;
+          height: 30rem;
+          overflow: hidden;
+
+          @media screen and (max-width: 768px) {
+            width: 100%;
+            height: 20rem;
+            margin: 2rem 0;
+          }
+
+          @media screen and (max-width: 480px) {
+            height: 10rem;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50px 0;
+
+            @media screen and (max-width: 768px) {
+              border-radius: 10px;
+            }
+          }
+        }
+
+        .about-content-text {
+          width: 55%;
+
+          @media screen and (max-width: 768px) {
+            width: 100%;
+          }
+        }
+
+        h3 {
+          font-size: 5rem;
+          font-weight: 300;
+          margin-bottom: 2rem;
+          color: $dark-gray;
+
+          @media screen and (max-width: 480px) {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+          }
+
+          @media screen and (max-width: 380px) {
+            font-size: 2rem;
+          }
+        }
+
+        p {
+          font-size: 1.2rem;
+          font-weight: 300;
+          margin-top: 2rem;
+          line-height: 2.5rem;
+
+          @media screen and (max-width: 480px) {
+            font-size: 1rem;
+            line-height: 2rem;
+            margin-top: 1rem;
+          }
+        }
+
+        .right {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

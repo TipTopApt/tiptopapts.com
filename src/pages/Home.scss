@@ -1,0 +1,14 @@
+.container {
+  .jumbotron {
+    background-image: linear-gradient(
+        200deg,
+        rgba(0, 0, 0, 0.51) 16.41%,
+        rgba(0, 0, 0, 0.51) 77.16%
+      ),
+      url(../assets/jumbotron.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  }
+}
