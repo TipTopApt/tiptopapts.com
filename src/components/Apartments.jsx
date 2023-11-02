@@ -27,9 +27,7 @@ const Apartments = () => {
                 accommodations provide a home away from home.
               </p>
               <Link to="/apartment">
-                <button className="button-primary">
-                  <span>Book An Apartment</span>
-                </button>
+                <button className="button-primary">Book An Apartment</button>
               </Link>
             </div>
           </div>

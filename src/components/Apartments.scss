@@ -2,12 +2,10 @@
 
 .apartments {
   margin-top: 8rem;
-
   padding: 5rem 0;
   background-color: $light-gray;
 
   @media screen and (max-width: 480px) {
-    padding: 5rem 0;
     margin-top: 5rem;
   }
 
@@ -126,6 +124,7 @@
 
         .button-primary {
           margin-top: 2rem;
+          font-weight: 700;
 
           @media screen and (max-width: 480px) {
             margin-top: 1rem;
