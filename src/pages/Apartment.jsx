@@ -53,25 +53,32 @@ const Apartment = () => {
   const [selectedApartment, setSelectedApartment] = useState(null);
 
   // Function to check if there are available apartments
-  useEffect(() => {
-    const checkApartmentsAvailability = async () => {
-      const apartmentsCollection = collection(db, "Apartments");
-      const snapshot = await getDocs(apartmentsCollection);
+  const checkApartmentsAvailability = async () => {
+    const apartmentsCollection = collection(db, "Apartments");
+    const snapshot = await getDocs(apartmentsCollection);
 
-      // Check if at least one apartment is available
+    // Check is all apartments are unavailable
+    const allApartmentsUnavailable = snapshot.docs.every(
+      (doc) => doc.data().status === "unavailable"
+    );
+
+    if (allApartmentsUnavailable) {
+      setIsApartmentsAvailable(false);
+    } else {
+      setIsApartmentsAvailable(true);
+
       const availableApartments = snapshot.docs.filter(
-        (doc) => doc.data().status === "available"
+        (doc) =>
+          doc.data().status === "available" || doc.data().status === "booked"
       );
 
-      if (availableApartments.length > 0) {
-        setIsApartmentsAvailable(true);
-        // Select the first available apartment
+      if (availableApartments) {
         setSelectedApartment(availableApartments[0].data().title);
-      } else {
-        setIsApartmentsAvailable(false);
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     checkApartmentsAvailability();
   }, []);
 
