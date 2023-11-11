@@ -396,6 +396,31 @@ const Apartment = () => {
                       />
                     </div>
                     <div className="form-group">
+                      <label htmlFor="apartment">
+                        Apartment <span className="required">*</span>
+                      </label>
+                      <select
+                        className="apartment-select"
+                        onChange={selectApartment}
+                        disabled={aptLoading}
+                        id="apartment"
+                      >
+                        <option value="">
+                          {aptLoading ? "Loading..." : "Select Apartment"}
+                        </option>
+                        {apartments.map((a, idx) => (
+                          <option
+                            disabled={!a.available}
+                            value={a._id}
+                            key={idx}
+                          >
+                            {a.name} ({currencyFormatter(a.pricePerNight)}) PER
+                            NIGHT
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="form-group">
                       <label htmlFor="name">
                         Name <span className="required">*</span>
                       </label>
@@ -433,30 +458,6 @@ const Apartment = () => {
                         onChange={(e) => setPhone(e.target.value)}
                         required
                       />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="apartment">
-                        Apartment <span className="required">*</span>
-                      </label>
-                      <select
-                        onChange={selectApartment}
-                        disabled={aptLoading}
-                        id="apartment"
-                      >
-                        <option value="">
-                          {aptLoading ? "Loading..." : "Select Apartment"}
-                        </option>
-                        {apartments.map((a, idx) => (
-                          <option
-                            disabled={!a.available}
-                            value={a._id}
-                            key={idx}
-                          >
-                            {a.name} ({currencyFormatter(a.pricePerNight)}) PER
-                            NIGH
-                          </option>
-                        ))}
-                      </select>
                     </div>
 
                     <div className="form-group">
@@ -502,7 +503,7 @@ const Apartment = () => {
                       <div className="modal-status-message">
                         <p className="success-message">Booking successful!</p>
                         <p className="success-message">
-                          Booking Refrence:{" "}
+                          Booking Reference:{" "}
                           <span style={{ fontWeight: 900 }}>
                             {bookingRef.code}
                           </span>

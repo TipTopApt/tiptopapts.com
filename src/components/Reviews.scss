@@ -30,6 +30,10 @@
         font-size: 1.5rem;
       }
 
+      @media screen and (max-width: 768px) {
+        font-size: 1.5rem;
+      }
+
       @media screen and (max-width: 480px) {
         font-size: 1rem;
       }
@@ -40,6 +44,10 @@
         font-weight: 400;
 
         color: white;
+
+        @media screen and (max-width: 1024px) {
+          font-size: 3.5rem;
+        }
 
         @media screen and (max-width: 768px) {
           font-size: 3.5rem;

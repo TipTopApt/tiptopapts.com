@@ -306,6 +306,24 @@
                   font-size: 1rem;
                 }
               }
+
+              .apartment-select {
+                height: 3rem;
+                border: 1px solid $gray;
+                border-radius: 0;
+                padding: 0 1rem;
+                font-size: 1.2rem;
+                font-weight: 300;
+
+                @media screen and (max-width: 480px) {
+                  height: 2.5rem;
+                  font-size: 1rem;
+                }
+              }
+
+              .apartment-select:focus {
+                outline: none;
+              }
             }
 
             .form-group:last-child {
