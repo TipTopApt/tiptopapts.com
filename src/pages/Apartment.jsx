@@ -22,21 +22,32 @@ import bathtub from "../assets/bathtub.svg";
 import fridge from "../assets/fridge.svg";
 import wifi from "../assets/wifi.svg";
 import { Slides } from "../config/data";
+import useApartments from "../hooks/api/useApartments";
+import { currencyFormatter } from "../utils";
+import useBookings from "../hooks/api/useBooking";
 
 const Apartment = () => {
   const currentDate = new Date().toISOString().split("T")[0];
   const pricePerNight = 100000;
+
+  const { apartments, getApartments, isLoading: aptLoading } = useApartments();
+
+  const { book, isLoading } = useBookings();
+
   const calculateTotalPrice = () => {
+    if (!apartment) return 0;
     const startDate = new Date(checkInDate);
     const endDate = new Date(checkOutDate);
     const timeDifference = endDate - startDate;
     const nights = timeDifference / (1000 * 60 * 60 * 24); // Convert milliseconds to days
 
-    return pricePerNight * nights;
+    return apartment.pricePerNight * nights;
   };
 
+  const [bookingRef, setBookingRef] = useState(null);
   const [checkInDate, setCheckInDate] = useState(currentDate);
   const [checkOutDate, setCheckOutDate] = useState(currentDate);
+  const [apartment, setApartment] = useState(null);
   const [guests, setGuests] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -146,78 +157,99 @@ const Apartment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Generate a booking ID and order date
-    const bookingId = Math.random().toString(36).substring(2, 8).toUpperCase();
-    const orderDate = new Date().toISOString().split("T")[0];
-
-    const bookingData = {
-      checkInDate,
-      checkOutDate,
-      guests,
-      name,
+    const response = await book({
       email,
-      phone,
-      code,
-      totalPrice: isDiscountApplied ? discountedPrice : calculateTotalPrice(),
-      status: "booked",
-      bookingId,
-      orderDate,
-      apartment: selectedApartment,
-    };
+      firstName: name.split(" ")[0],
+      lastName: name.split(" ")[1],
+      apartment: apartment._id,
+      numberOfGuest: guests,
+      phoneNumber: phone,
+      from: checkInDate,
+      to: checkOutDate,
+    });
+    if (response)
+      setBookingRef({ ...response.booking, transaction: response.transaction });
 
-    // Add booking to Firestore
-    const guestCollection = collection(db, "Guests"); // Reference to your Firestore collection
+    // // Generate a booking ID and order date
+    // const bookingId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    // const orderDate = new Date().toISOString().split("T")[0];
 
-    try {
-      setIsSubmitting(true); // Show loading state
-      const docRef = await addDoc(guestCollection, bookingData);
-      console.log("Booking added with ID: ", docRef.id);
-      setIsSubmitting(false); // Hide loading state
-      setBookingStatus("success"); // Show success message
+    // const bookingData = {
+    //   checkInDate,
+    //   checkOutDate,
+    //   guests,
+    //   name,
+    //   email,
+    //   phone,
+    //   code,
+    //   totalPrice: isDiscountApplied ? discountedPrice : calculateTotalPrice(),
+    //   status: "booked",
+    //   bookingId,
+    //   orderDate,
+    //   apartment: selectedApartment,
+    // };
 
-      // Update the apartment status and bookings
-      const apartmentsCollection = collection(db, "Apartments");
-      const apartmentQuery = query(
-        apartmentsCollection,
-        where("title", "==", selectedApartment)
-      );
-      const apartmentQuerySnapshot = await getDocs(apartmentQuery);
+    // // Add booking to Firestore
+    // const guestCollection = collection(db, "Guests"); // Reference to your Firestore collection
 
-      // If the apartment exists, update its status and bookings
-      if (!apartmentQuerySnapshot.empty) {
-        const apartmentDoc = apartmentQuerySnapshot.docs[0];
-        const apartmentRef = apartmentDoc.ref;
-        const apartmentData = apartmentDoc.data();
+    // try {
+    //   setIsSubmitting(true); // Show loading state
+    //   const docRef = await addDoc(guestCollection, bookingData);
+    //   console.log("Booking added with ID: ", docRef.id);
+    //   setIsSubmitting(false); // Hide loading state
+    //   setBookingStatus("success"); // Show success message
 
-        const newBooking = { checkInDate, checkOutDate };
-        const updatedBookings = [...apartmentData.bookings, newBooking];
+    //   // Update the apartment status and bookings
+    //   const apartmentsCollection = collection(db, "Apartments");
+    //   const apartmentQuery = query(
+    //     apartmentsCollection,
+    //     where("title", "==", selectedApartment)
+    //   );
+    //   const apartmentQuerySnapshot = await getDocs(apartmentQuery);
 
-        await updateDoc(apartmentRef, {
-          status: "booked",
-          bookings: updatedBookings,
-        });
-      }
+    //   // If the apartment exists, update its status and bookings
+    //   if (!apartmentQuerySnapshot.empty) {
+    //     const apartmentDoc = apartmentQuerySnapshot.docs[0];
+    //     const apartmentRef = apartmentDoc.ref;
+    //     const apartmentData = apartmentDoc.data();
 
-      // Reset the form
-      setCheckInDate(currentDate);
-      setCheckOutDate(currentDate);
-      setGuests(1);
-      setName("");
-      setEmail("");
-      setPhone("");
-      setCode("");
-      setCodeValidationMessage("");
-      setIsCheckingCode(false);
-      setIsDiscountApplied(false);
-      setDiscountedPrice(calculateTotalPrice());
+    //     const newBooking = { checkInDate, checkOutDate };
+    //     const updatedBookings = [...apartmentData.bookings, newBooking];
 
-      setIsSubmitting(false);
-      setBookingStatus("");
-    } catch (error) {
-      setIsSubmitting(false); // Hide loading state
-      setBookingStatus("error"); // Show error message
-    }
+    //     await updateDoc(apartmentRef, {
+    //       status: "booked",
+    //       bookings: updatedBookings,
+    //     });
+    //   }
+
+    //   // Reset the form
+    //   setCheckInDate(currentDate);
+    //   setCheckOutDate(currentDate);
+    //   setGuests(1);
+    //   setName("");
+    //   setEmail("");
+    //   setPhone("");
+    //   setCode("");
+    //   setCodeValidationMessage("");
+    //   setIsCheckingCode(false);
+    //   setIsDiscountApplied(false);
+    //   setDiscountedPrice(calculateTotalPrice());
+
+    //   setIsSubmitting(false);
+    //   setBookingStatus("");
+    // } catch (error) {
+    //   setIsSubmitting(false); // Hide loading state
+    //   setBookingStatus("error"); // Show error message
+    // }
   };
+
+  const selectApartment = (e) => {
+    setApartment(apartments.find((a) => a._id === e.target.value));
+  };
+
+  useEffect(() => {
+    getApartments();
+  }, []);
 
   return (
     <div className="apartment-page">
@@ -402,6 +434,30 @@ const Apartment = () => {
                         required
                       />
                     </div>
+                    <div className="form-group">
+                      <label htmlFor="apartment">
+                        Apartment <span className="required">*</span>
+                      </label>
+                      <select
+                        onChange={selectApartment}
+                        disabled={aptLoading}
+                        id="apartment"
+                      >
+                        <option value="">
+                          {aptLoading ? "Loading..." : "Select Apartment"}
+                        </option>
+                        {apartments.map((a, idx) => (
+                          <option
+                            disabled={!a.available}
+                            value={a._id}
+                            key={idx}
+                          >
+                            {a.name} ({currencyFormatter(a.pricePerNight)}) PER
+                            NIGH
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
                     <div className="form-group">
                       <label htmlFor="phone">Discount Code</label>
@@ -430,16 +486,37 @@ const Apartment = () => {
                     </div>
                     <div className="form-group price">
                       <h3>
-                        Total: ₦{" "}
-                        {isDiscountApplied
-                          ? discountedPrice
-                          : calculateTotalPrice()}
+                        Total:{" "}
+                        {apartment
+                          ? currencyFormatter(calculateTotalPrice())
+                          : 0}
                       </h3>
                     </div>
                     {/* Show a success message when the booking is successful */}
                     {bookingStatus === "success" && (
                       <div className="modal-status-message">
                         <p className="success-message">Booking successful!</p>
+                      </div>
+                    )}
+                    {bookingRef && (
+                      <div className="modal-status-message">
+                        <p className="success-message">Booking successful!</p>
+                        <p className="success-message">
+                          Booking Refrence:{" "}
+                          <span style={{ fontWeight: 900 }}>
+                            {bookingRef.code}
+                          </span>
+                        </p>
+                        <p className="success-message">
+                          follow or copy the link to make your payment now:
+                          <a
+                            href={bookingRef.transaction.checkoutUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {bookingRef.transaction.checkoutUrl}
+                          </a>
+                        </p>
                       </div>
                     )}
                     {/* Show an error message if there was an error during submission */}
@@ -450,8 +527,12 @@ const Apartment = () => {
                     )}
                     <div className="form-group">
                       {/* Show a loading message while submitting */}
-                      <button className="button-primary" type="submit">
-                        {isSubmitting ? "Booking..." : "Book Now"}
+                      <button
+                        disabled={isLoading}
+                        className="button-primary"
+                        type="submit"
+                      >
+                        {isLoading ? "Booking..." : "Book Now"}
                       </button>
                     </div>
                   </form>

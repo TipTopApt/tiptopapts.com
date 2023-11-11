@@ -5,10 +5,13 @@ import Apartment from "./pages/Apartment";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <div className="container">
+      <ToastContainer />
       <Routes>
         <Route exact path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
