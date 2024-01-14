@@ -12,8 +12,23 @@ import {
   FaSnapchat,
 } from "react-icons/fa6";
 import Slide from "react-reveal/Slide";
+import { useState } from "react";
+import useContact from "../hooks/api/useContact";
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const { sendMessage, isLoading } = useContact();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendMessage({ name, email, subject, message });
+    setSubject("");
+    setMessage("");
+    setEmail("");
+    setName("");
+  };
   return (
     <div className="contact">
       <div className="contact-banner">
@@ -102,9 +117,11 @@ const Contact = () => {
           <Slide right>
             <div className="reservation-form">
               <h3>For enquiries, reservations or customer feedback.</h3>
-              <form action="">
+              <form onSubmit={handleSubmit} action="">
                 <div className="form-group">
                   <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     type="text"
                     name="name"
                     id="name"
@@ -114,6 +131,8 @@ const Contact = () => {
                 </div>
                 <div className="form-group">
                   <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     name="email"
                     id="email"
@@ -123,6 +142,8 @@ const Contact = () => {
                 </div>
                 <div className="form-group">
                   <input
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
                     type="tel"
                     name="subject"
                     id="subject"
@@ -132,6 +153,8 @@ const Contact = () => {
                 </div>
                 <div className="form-group">
                   <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     name="message"
                     id="message"
                     cols="30"
@@ -147,8 +170,12 @@ const Contact = () => {
                   </label>
                 </div>
                 <div className="form-group">
-                  <button className="button-primary" type="submit">
-                    Send
+                  <button
+                    disabled={isLoading}
+                    className="button-primary"
+                    type="submit"
+                  >
+                    {isLoading ? "Loading..." : "Send"}
                   </button>
                 </div>
               </form>

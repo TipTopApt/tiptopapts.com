@@ -16,7 +16,7 @@ const Apartments = () => {
               <h2>Our Apartments</h2>
             </div>
             <div className="apartment-info">
-              <h4>This is TipTop</h4>
+              {/* <h4>This is TipTop</h4> */}
               <h2>Premium Apartments</h2>
               <p>
                 Where comfort and luxury meet. Our meticulously designed
