@@ -9,6 +9,7 @@ const Hero = () => {
       let map = new window.google.maps.Map(document.getElementById("map"), {
         center: location,
         zoom: 16,
+        // apiKey: "AIzaSyBKHZ5C24eYH-MccKBSniBl3mT5MjBhJYY",
       });
       new window.google.maps.Marker({
         position: location,

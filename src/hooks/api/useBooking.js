@@ -4,7 +4,12 @@ import useAPI from "./useAPI";
 import { useState } from "react";
 
 function useBookings() {
-  const [configs, setConfigs] = useState({ cautionDeposite: 0 });
+  const [configs, setConfigs] = useState({
+    cautionDeposite: 0,
+    onHoldHours: 0,
+    vat: 7,
+    serviceCharge: 3,
+  });
   const [discount, setDiscount] = useState(null);
   const [reviews, setReviews] = useState([]);
   const { post, isLoading, get } = useAPI();
@@ -13,9 +18,9 @@ function useBookings() {
     const { error, data } = await post(urls.bookings.baseUrl, fdata);
     if (error) return;
     toast.success(data.message);
-    alert(
-      `${data.message} copy your booking refrence: ${data.data.booking.code} and proceed to make payment!`
-    );
+    // alert(
+    //   `${data.message} copy your booking refrence: ${data.data.booking.code} and proceed to make payment!`
+    // );
     return data.data;
   };
 

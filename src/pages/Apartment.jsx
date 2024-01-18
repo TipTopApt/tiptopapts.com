@@ -23,10 +23,13 @@ const Apartment = () => {
   const [checkInDate, setCheckInDate] = useState(currentDate);
   const [checkOutDate, setCheckOutDate] = useState(currentDate);
   const [apartment, setApartment] = useState(null);
+  const [ePhone, setEPhone] = useState("");
+  const [eName, setEName] = useState("");
   const [guests, setGuests] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [onHold, setOnHold] = useState(false);
   const [code, setCode] = useState("");
 
   const { apartments, getApartments, isLoading: aptLoading } = useApartments();
@@ -57,6 +60,11 @@ const Apartment = () => {
       from: checkInDate,
       to: checkOutDate,
       discountCode: code,
+      onHold,
+      emergencyContact: {
+        name: eName,
+        phoneNumber: ePhone,
+      },
     });
     if (response)
       setBookingRef({ ...response.booking, transaction: response.transaction });
@@ -77,6 +85,29 @@ const Apartment = () => {
 
   return (
     <div className="apartment-page">
+      {bookingRef && (
+        <div className="success">
+          <div className="cnt-card card">
+            <h2>Booking Successful</h2>
+            <br />
+            <table>
+              <tr>
+                <td>Booking Reference</td>
+                <td>{bookingRef.code}</td>
+              </tr>
+            </table>
+            <br />
+            <p style={{ fontSize: 10, color: "red" }}>
+              {onHold
+                ? `Booking successful please check your inbox/spam or go to TipTop Apartments with your booing reference to make paymenet in the next ${configs?.onHoldHours} hours otherwise your booking would be canceled.`
+                : "Upon successful payment please check your inbox or spam for confirmation email. Thanks."}
+            </p>
+            <a href={onHold ? "/" : bookingRef.transaction.checkoutUrl}>
+              <button>{onHold ? "Ok" : "Complete Payment"}</button>
+            </a>
+          </div>
+        </div>
+      )}
       <Navbar />
       <div className="apartment-page-container">
         <div className="apartment-title">
@@ -263,7 +294,33 @@ const Apartment = () => {
                       required
                     />
                   </div>
-
+                  <div className="form-group">
+                    <label htmlFor="ename">
+                      Emergency Contact Name <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="ename"
+                      id="ename"
+                      value={eName}
+                      onChange={(e) => setEName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="ephone">
+                      Emergency Contact Phone{" "}
+                      <span className="required">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="ephone"
+                      id="ephone"
+                      value={ePhone}
+                      onChange={(e) => setEPhone(e.target.value)}
+                      required
+                    />
+                  </div>
                   <div className="form-group">
                     <label htmlFor="code">Discount Code</label>
                     <input
@@ -288,6 +345,20 @@ const Apartment = () => {
                       </>
                     )}
                   </div>
+
+                  <div
+                    style={{ marginBottom: "0 !important" }}
+                    className="form-group terms"
+                  >
+                    <input
+                      type="checkbox"
+                      name="onHold"
+                      id="onHold"
+                      checked={onHold}
+                      onChange={(e) => setOnHold(!onHold)}
+                    />
+                    <label htmlFor="onHold">Book on Hold</label>
+                  </div>
                   <div className="form-group terms">
                     <input type="checkbox" name="terms" id="terms" required />
                     <label htmlFor="terms">
@@ -295,7 +366,7 @@ const Apartment = () => {
                     </label>
                   </div>
                   <div className="form-group price">
-                    <h3>
+                    <h3 style={{ display: "flex" }}>
                       Total:{" "}
                       {apartment
                         ? currencyFormatter(
@@ -309,14 +380,24 @@ const Apartment = () => {
                                     : 0)
                               : 0
                           )
-                        : 0}{" "}
-                      <span style={{ fontSize: 12 }}>
-                        +{currencyFormatter(configs.cautionDeposite)} caution
-                        deposite
-                      </span>
+                        : 0}
+                      <div>
+                        <span style={{ fontSize: 12, display: "block" }}>
+                          +{currencyFormatter(configs.cautionDeposite)} caution
+                          deposite
+                        </span>
+                        <span style={{ fontSize: 12, display: "block" }}>
+                          +
+                          {currencyFormatter(
+                            calculateTotalPrice() *
+                              ((configs.vat + configs.serviceCharge) / 100)
+                          )}{" "}
+                          vat & service charge
+                        </span>
+                      </div>
                     </h3>
                   </div>
-                  {bookingRef && (
+                  {/* {bookingRef && (
                     <div className="modal-status-message">
                       <p className="success-message">Booking successful!</p>
                       <p className="success-message">
@@ -336,7 +417,7 @@ const Apartment = () => {
                         </a>
                       </p>
                     </div>
-                  )}
+                  )} */}
 
                   <div className="form-group">
                     <button

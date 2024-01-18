@@ -9,44 +9,6 @@ import "swiper/css/scrollbar";
 import useBookings from "../hooks/api/useBooking";
 import { useEffect } from "react";
 
-const reviews = [
-  {
-    id: 1,
-    name: "Sherif Dauda",
-    rating: 5,
-    review:
-      "This place is great! I had a very pleasant stay here. Great stuff and beautiful suites with a fabulous view!",
-  },
-  {
-    id: 2,
-    name: "Ahmed Adetokumbo",
-    rating: 5,
-    review:
-      "Been there with my family. Beautiful place, definitely recommended. Children also enjoyed it very much",
-  },
-  {
-    id: 3,
-    name: "Ismail Napier",
-    rating: 5,
-    review:
-      "After a long day of hiking we finally arrived at TipTop and the experience was amazing. So many activities that helped us relax after such a long day. It was a very pleasant stay!",
-  },
-  {
-    id: 4,
-    name: "Ibrahim Ali",
-    rating: 5,
-    review:
-      "TipTop is definitely the best place to stay in the area. The staff is very friendly and the suites are just amazing!",
-  },
-  {
-    id: 5,
-    name: "Fatima Umar",
-    rating: 5,
-    review:
-      "Henceforth whenever I am in Abuja, I will be staying at TipTop. There is everything I need. No doubt it is home away from home.",
-  },
-];
-
 const Reviews = () => {
   const { reviews, getReviews } = useBookings();
 
